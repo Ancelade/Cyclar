@@ -12,7 +12,7 @@ axum = { version = "0.8", features = ["form", "json", "macros", "ws"] }
 base64 = "0.22"
 clap = { version = "4.5", features = ["derive"] }
 cyclar-protocol = { path = "../../crates/protocol" }
-ed25519-dalek = { version = "2.2", features = ["rand_core"] }
+ed25519-dalek = { version = "3.0", features = ["rand_core"] }
 futures-util = { version = "0.3", features = ["sink"] }
 hex = "0.4"
 maud = { version = "0.26", features = ["axum"] }

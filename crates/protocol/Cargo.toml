@@ -7,7 +7,7 @@ description = "Shared wire types and signed session grants for Cyclar"
 
 [dependencies]
 base64 = "0.22.1"
-ed25519-dalek = "2.2.0"
+ed25519-dalek = "3.0.0"
 serde = { version = "1.0", features = ["derive"] }
 uuid = { version = "=1.18.1", features = ["serde", "v4"] }
 
