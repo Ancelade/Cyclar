@@ -1,0 +1,42 @@
+[package]
+name = "cyclar-desktop"
+version = "0.1.0"
+edition.workspace = true
+license.workspace = true
+rust-version.workspace = true
+
+[lib]
+name = "cyclar_desktop"
+path = "src/lib.rs"
+
+[[bin]]
+name = "cyclar-host"
+path = "src/bin/cyclar-host.rs"
+
+[[bin]]
+name = "cyclar-desktop"
+path = "src/bin/cyclar-desktop.rs"
+
+[dependencies]
+cyclar-protocol = { path = "../../crates/protocol" }
+cyclar-transfer = { path = "../../crates/transfer" }
+anyhow = "1"
+base64 = "0.22"
+clap = { version = "4.5", features = ["derive"] }
+ctrlc = "3"
+ed25519-dalek = { version = "2", features = ["rand_core"] }
+futures-util = "0.3"
+jpeg-decoder = "0.3"
+jpeg-encoder = "0.6"
+rand_core = { version = "0.6", features = ["getrandom"] }
+reqwest = { version = "0.12", default-features = false, features = ["blocking", "json", "rustls-tls"] }
+rpassword = "7"
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+snow = "0.10"
+tokio = { version = "1", features = ["rt", "net", "io-util", "time", "macros"] }
+tokio-tungstenite = { version = "0.28", default-features = false, features = ["connect", "rustls-tls-webpki-roots"] }
+uuid = { version = "1", features = ["serde", "v4"] }
+
+[target.'cfg(target_os = "linux")'.dependencies]
+x11rb = { version = "0.14", features = ["xtest"] }

@@ -1,0 +1,13 @@
+[workspace]
+members = ["crates/protocol", "crates/transfer", "apps/server", "apps/desktop"]
+resolver = "2"
+
+[workspace.package]
+edition = "2021"
+license = "LicenseRef-PolyForm-Internal-Use-1.0.0"
+rust-version = "1.88"
+
+[profile.release]
+lto = "thin"
+codegen-units = 1
+strip = "symbols"

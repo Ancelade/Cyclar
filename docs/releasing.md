@@ -1,0 +1,7 @@
+# Préparer une livraison
+
+Le workflow [Package binaries](../.github/workflows/package.yml) est configuré pour compiler et tester le workspace sur Linux, Windows et macOS. Il conserve pendant 14 jours un paquet serveur par OS et, sous Linux, un paquet expérimental `cyclar-host`/`cyclar-desktop` pour X11, avec SHA-256 et texte de licence dans chaque paquet. Il démarre pour une étiquette `v*` ou manuellement. Ces artefacts ne constituent pas, seuls, une publication signée ou une certification de sécurité. Les binaires desktop Windows/macOS sont exclus car leurs backends ne sont pas disponibles.
+
+Avant de publier une version, les mainteneurs doivent vérifier que les tests CI sont verts sur le commit exact, que la matrice de plateformes annoncée a été exécutée, que le [journal des changements](../CHANGELOG.md) et le [guide de déploiement](deployment.md) reflètent la version, et qu'une sauvegarde/restauration **hors ligne** depuis la version précédente a été répétée sur une installation isolée. Les opérations manuelles dépendantes de l'OS (signature, notarisation Apple, installateurs, pilotes et tests matériels) ne sont pas remplacées par ce workflow.
+
+Un tag `v*` ne déploie aucun service et ne crée pas automatiquement de publication GitHub. La distribution du logiciel et des versions modifiées reste soumise à [PolyForm Internal Use 1.0.0](../LICENSE) et aux droits du titulaire de la licence. Vérifiez aussi les obligations des dépendances et des codecs utilisés par les binaires effectivement distribués.

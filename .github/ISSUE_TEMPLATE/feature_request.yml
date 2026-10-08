@@ -1,0 +1,26 @@
+name: Fonctionnalité
+description: Proposer un usage ou une amélioration.
+title: "feat: "
+labels: [enhancement]
+body:
+  - type: textarea
+    id: need
+    attributes:
+      label: Besoin utilisateur
+      description: Quel problème concret cette fonction résout-elle ?
+    validations:
+      required: true
+  - type: textarea
+    id: behavior
+    attributes:
+      label: Comportement souhaité
+      description: Décrivez le parcours principal et les plateformes concernées.
+    validations:
+      required: true
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: Critères de validation
+      description: Comment vérifier que cela fonctionne, y compris les cas d'échec ?
+    validations:
+      required: false

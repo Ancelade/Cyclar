@@ -1,0 +1,35 @@
+name: Anomalie
+description: Signaler un défaut reproductible sans données sensibles.
+title: "bug: "
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: "Pour une vulnérabilité exploitable, suivez SECURITY.md et utilisez un canal privé. N'ajoutez aucun secret ni contenu de session réel."
+  - type: input
+    id: version
+    attributes:
+      label: Version ou commit
+      placeholder: "Version affichée ou SHA du commit"
+    validations:
+      required: true
+  - type: input
+    id: platform
+    attributes:
+      label: Plateforme
+      placeholder: "OS, architecture et version"
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Reproduction
+      description: Étapes minimales avec données fictives.
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Résultat attendu et résultat observé
+    validations:
+      required: true

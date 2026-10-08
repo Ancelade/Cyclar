@@ -1,0 +1,19 @@
+[package]
+name = "cyclar-transfer"
+version = "0.1.0"
+edition = "2021"
+license = "LicenseRef-PolyForm-Internal-Use-1.0.0"
+description = "Bounded, resumable, integrity-checked on-demand file transfer for Cyclar"
+
+[dependencies]
+blake3 = "1.8.7"
+serde = { version = "1.0", features = ["derive"] }
+tempfile = "3.27.0"
+thiserror = "2.0"
+uuid = { version = "=1.18.1", features = ["serde", "v4"] }
+
+[target.'cfg(unix)'.dependencies]
+libc = "0.2"
+
+[dev-dependencies]
+serde_json = "1.0"
