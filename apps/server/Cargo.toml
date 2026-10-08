@@ -16,7 +16,7 @@ ed25519-dalek = { version = "2.2", features = ["rand_core"] }
 futures-util = { version = "0.3", features = ["sink"] }
 hex = "0.4"
 maud = { version = "0.26", features = ["axum"] }
-rand = "0.8"
+rand = "0.10"
 redb = "2.6"
 rpassword = "7"
 serde = { version = "1", features = ["derive"] }
