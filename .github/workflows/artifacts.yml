@@ -1,0 +1,97 @@
+name: Application artifacts
+
+on:
+  push:
+    branches: [main, master]
+    tags: ['v*']
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: artifacts-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+  package:
+    name: Build (${{ matrix.target }})
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 60
+    env:
+      BUILD_TARGET: ${{ matrix.target }}
+      CARGO_TARGET_ARMV7_UNKNOWN_LINUX_GNUEABIHF_LINKER: arm-linux-gnueabihf-gcc
+      CC_armv7_unknown_linux_gnueabihf: arm-linux-gnueabihf-gcc
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: ubuntu-24.04
+            target: x86_64-unknown-linux-gnu
+          - os: ubuntu-24.04
+            target: i686-unknown-linux-gnu
+          - os: ubuntu-24.04-arm
+            target: aarch64-unknown-linux-gnu
+          - os: ubuntu-24.04
+            target: armv7-unknown-linux-gnueabihf
+          - os: windows-2022
+            target: x86_64-pc-windows-msvc
+          - os: windows-2022
+            target: i686-pc-windows-msvc
+          - os: windows-11-arm
+            target: aarch64-pc-windows-msvc
+          - os: macos-15-intel
+            target: x86_64-apple-darwin
+          - os: macos-15
+            target: aarch64-apple-darwin
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+        with:
+          persist-credentials: false
+      - name: Install Linux x86 cross compiler
+        if: matrix.target == 'i686-unknown-linux-gnu'
+        run: |
+          sudo apt-get update
+          sudo apt-get install --yes gcc-multilib
+      - name: Install Linux ARMv7 cross compiler
+        if: matrix.target == 'armv7-unknown-linux-gnueabihf'
+        run: |
+          sudo apt-get update
+          sudo apt-get install --yes gcc-arm-linux-gnueabihf
+      - name: Install Rust target
+        shell: bash
+        run: |
+          rustup toolchain install stable --profile minimal --target "$BUILD_TARGET"
+          rustup default stable
+      - uses: actions/cache@0400d5f644dc74513175e3cd8d07132dd4860809 # v4.2.4
+        with:
+          path: |
+            ~/.cargo/registry
+            ~/.cargo/git
+          key: cargo-artifacts-${{ matrix.target }}-${{ hashFiles('**/Cargo.lock') }}
+          restore-keys: cargo-artifacts-${{ matrix.target }}-
+      - name: Build server
+        shell: bash
+        run: cargo build -p cyclar-server --bin cyclar-server --release --locked --target "$BUILD_TARGET"
+      - name: Build host and desktop client (Linux/X11)
+        if: runner.os == 'Linux'
+        shell: bash
+        run: cargo build -p cyclar-desktop --bins --release --locked --target "$BUILD_TARGET"
+      - name: Package applications (Linux and macOS)
+        if: runner.os != 'Windows'
+        shell: bash
+        run: python3 .github/scripts/package.py --target "$BUILD_TARGET"
+      - name: Package applications (Windows)
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: python .github/scripts/package.py --target "$env:BUILD_TARGET"
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: cyclar-${{ matrix.target }}
+          path: artifacts/*
+          if-no-files-found: error
+          retention-days: 14

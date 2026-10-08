@@ -33,7 +33,7 @@ cargo clippy --workspace --all-targets --locked -- -D warnings
 cargo test --workspace --locked
 ```
 
-Ces trois commandes ont passé le 8 octobre 2026 : 46/46 tests workspace, format vérifié et Clippy strict sans avertissement. Elles ne qualifient pas les parcours graphiques ou réseaux réels. La CI répète ces contrôles sur les changements proposés. Consultez [CONTRIBUTING.md](CONTRIBUTING.md) pour les attentes de test et de revue, et [SECURITY.md](SECURITY.md) pour signaler une vulnérabilité de façon privée.
+Ces trois commandes ont passé le 8 octobre 2026 : 46/46 tests workspace, format vérifié et Clippy strict sans avertissement. Elles ne qualifient pas les parcours graphiques ou réseaux réels et doivent désormais être exécutées localement. Le [pipeline GitHub unique](docs/releasing.md) produit uniquement les archives des applications pour Linux, Windows et macOS, selon leurs architectures et backends disponibles. Consultez [CONTRIBUTING.md](CONTRIBUTING.md) pour les attentes de test et de revue, et [SECURITY.md](SECURITY.md) pour signaler une vulnérabilité de façon privée.
 
 ## Licence
 
