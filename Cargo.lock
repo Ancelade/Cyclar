@@ -575,7 +575,7 @@ name = "cyclar-desktop"
 version = "0.1.0"
 dependencies = [
  "anyhow",
- "base64 0.22.1",
+ "base64 0.23.1",
  "clap",
  "ctrlc",
  "cyclar-protocol",
@@ -600,7 +600,7 @@ dependencies = [
 name = "cyclar-protocol"
 version = "0.1.0"
 dependencies = [
- "base64 0.22.1",
+ "base64 0.23.1",
  "ed25519-dalek",
  "serde",
  "serde_json",
@@ -614,7 +614,7 @@ dependencies = [
  "anyhow",
  "argon2",
  "axum",
- "base64 0.22.1",
+ "base64 0.23.1",
  "clap",
  "cyclar-desktop",
  "cyclar-protocol",
